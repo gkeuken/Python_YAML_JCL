@@ -1,0 +1,20 @@
+RAWJOBS: 
+  JOB1: 
+    MAXCC:  0 
+    DATA:   | 
+            //JOB1 JOB CLASS=A,MSGCLASS=X 
+            //STEP1 EXEC PGM=IEFBR14 
+  JOB2: 
+    MAXCC:  16 
+    DATA:   | 
+            //JOB2 JOB CLASS=A,MSGCLASS=X 
+            //STEP1 EXEC PGM=IDCAMS 
+            //SYSPRINT DD DUMMY 
+            //SYSIN DD * 
+              SET MAXCC = 16 
+            /* 
+  JOB3: 
+    MAXCC:  0 
+    DATA:   | 
+            //JOB3 JOB CLASS=A,MSGCLASS=X 
+            //STEP1 EXEC PGM=IEFBRXX 
