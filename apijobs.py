@@ -60,7 +60,7 @@ def load_yaml_file(yaml_file):
 
 
 
-def run_job(jobtype):
+def run_job(jobname):
     """
       run job
     """
@@ -69,10 +69,10 @@ def run_job(jobtype):
     _ddlist = []
     _sysin_data = ''
 
-    opts.jobpgm = opts.operational_yaml["JOBS"][jobtype]["PGM"]
-    opts.ddlist = opts.operational_yaml["JOBS"][jobtype]["DDLIST"]
-    opts.pgmparm = opts.operational_yaml["JOBS"][jobtype]["PGMPARM"]
-    opts.pgmauth = opts.operational_yaml["JOBS"][jobtype]["PGMAUTH"]
+    opts.jobpgm = opts.operational_yaml["JOBS"][jobname]["PGM"]
+    opts.ddlist = opts.operational_yaml["JOBS"][jobname]["DDLIST"]
+    opts.pgmparm = opts.operational_yaml["JOBS"][jobname]["PGMPARM"]
+    opts.pgmauth = opts.operational_yaml["JOBS"][jobname]["PGMAUTH"]
 
     if opts.pgmparm == "None":
         opts.pgmparm = ''
@@ -103,7 +103,6 @@ def run_job(jobtype):
                                 print(f"findsim value: {findsim}")
                             newdsname += findsim+"."
                         ddstmt[dds][atr_elem] = newdsname.strip('.')
-                        print(f"Data Set name with Symbolic substitution made for: {findsim}")
                     ddatr[atr_elem] = ddstmt[dds][atr_elem]
 
         for ddname in ddstmt.keys():
@@ -147,7 +146,10 @@ def run_job(jobtype):
 
     print(_response)
     for delname in _del_file_name_list:
+        if _response.rc != 0:
+            datasets.read(delname)
         datasets.delete(delname)
+
 
 def lookup_operational_yaml_vars():
 
@@ -181,8 +183,9 @@ def process_joblist():
       process joblist
     """
     global opts
-    for jobtype in opts.operational_yaml['JOBS']:
-        run_job(jobtype)
+    for jobname in opts.operational_yaml['JOBS']:
+        print(f"Submitting job: {jobname}")
+        run_job(jobname)
 
 
 def main():
