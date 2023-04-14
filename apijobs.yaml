@@ -86,5 +86,6 @@ JOBS:
           type: "data"
           dataset_name: "None"
           DATA: |
+                   DELETE {{ HLQ1 }}..&SYSNAME.SAMPLE1
                    DELETE {{ HLQ2 }}.DD1.SAMPLE2
                    DELETE {{ HLQ3 }}.DD2.SAMPLE2
