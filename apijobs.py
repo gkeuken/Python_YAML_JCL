@@ -34,7 +34,7 @@ def parse_our_args(argv=None):
         if opts.operational_yaml_file is None:
             _default_operational_yaml_file = "apijobs.yaml"
             opts.operational_yaml_file = opts.script_dir + '/' + _default_operational_yaml_file
-
+        print(f"Running jobs in YAML file: {opts.operational_yaml_file}")
 
 
     except Exception as exp:
