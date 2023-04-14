@@ -1,0 +1,90 @@
+GLOBALS:
+  HLQ1: "SYS2"
+  HLQ2: "SYS3"
+  HLQ3: "SYS4"
+  TEMPHLQ: "IBMUSER"
+JOBS:
+  SAMPLE1:
+    PGM: IEBGENER
+    PGMAUTH: False
+    PGMPARM: ""
+    DDLIST:
+      - SYSUT1:
+          dataset_name: "None"
+          type: "data"
+          DATA: |
+                 This is data record 1
+                 This is data record 2
+                 .. must I go on?
+      - SYSUT2:
+          dataset_name: "{{ HLQ1 }}..&SYSNAME.SAMPLE1"
+          disposition: "NEW"
+          type: "seq"
+          normal_disposition: "CATALOG"
+          primary: "2"
+          primary_unit: "C"
+          storage_class: "SCBASE"
+          record_format: "FB"
+          record_length: "80"
+      - SYSIN:
+          type: "seq"
+          dataset_name: "None"
+          block_size: "0"
+      - SYSPRINT:
+          type: "seq"
+          dataset_name: "None"
+          disposition: "NEW"
+          type: "seq"
+          normal_disposition: "DELETE"
+          primary: "1"
+          primary_unit: "C"
+          storage_class: "SCBASE"
+          record_format: "FB"
+          record_length: "155"
+  SAMPLE2:
+    PGM: IEFBR14
+    PGMAUTH: False
+    PGMPARM: ""
+    DDLIST:
+      - DD1:
+          dataset_name: "{{ HLQ2 }}.DD1.SAMPLE2"
+          disposition: "NEW"
+          type: "seq"
+          normal_disposition: "CATALOG"
+          primary: "2"
+          primary_unit: "C"
+          storage_class: "SCBASE"
+          record_format: "FB"
+          record_length: "80"
+      - DD2:
+          dataset_name: "{{ HLQ3 }}.DD2.SAMPLE2"
+          disposition: "NEW"
+          type: "seq"
+          normal_disposition: "CATALOG"
+          primary: "2"
+          primary_unit: "C"
+          storage_class: "SCBASE"
+          record_format: "U"
+          record_length: "0"
+  SAMPLE3:
+    PGM: IDCAMS
+    PGMAUTH: True
+    PGMPARM: ""
+    DDLIST:
+      - SYSPRINT:
+          type: "seq"
+          dataset_name: "None"
+          disposition: "NEW"
+          type: "seq"
+          normal_disposition: "DELETE"
+          primary: "2"
+          primary_unit: "C"
+          storage_class: "SCBASE"
+          record_format: "FB"
+          record_length: "140"
+      - SYSIN:
+          type: "data"
+          dataset_name: "None"
+          DATA: |
+                   DELETE {{ HLQ2 }}.DD1.SAMPLE2
+                   DELETE {{ HLQ3 }}.DD2.SAMPLE2
