@@ -1,3 +1,11 @@
+# PGM:     Name of the program to run via mvscmd
+# PGMAUTH: controls if you need to run authorized or not (IDCAMS, in my case needs to run authorized)
+# PGMPARM: For adding any program parameters
+# DDLIST:  A list of the requried DD statements for the job
+#
+# TEMPHLQ, HLQ1, HLQ2, and HLQ3: Just samples to show you can set some global type variables to use within the rest of the yaml
+#
+#
 GLOBALS:
   HLQ1: "SYS2"
   HLQ2: "SYS3"
